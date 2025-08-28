@@ -1,0 +1,98 @@
+[
+  {
+    "id": 1,
+    "category": "Electronics",
+    "subcategories": ["Mobiles", "Laptops", "Headphones", "Cameras"],
+    "name": "ElectroMart",
+    "owner": "Rahul Kumar",
+    "email": "rahul@electromart.com",
+    "gst": "27ABCDE1234F1Z5",
+    "place": "Mumbai",
+    "image": "/shopCat/fashion.jpg",
+    "rating": 4.8
+  },
+  {
+    "id": 2,
+    "category": "Fashion",
+    "subcategories": ["Men", "Women", "Kids", "Accessories"],
+    "name": "StyleHub",
+    "owner": "Anita Sharma",
+    "email": "anita@stylehub.com",
+    "gst": "27XYZDE5678G1Z2",
+    "place": "Delhi",
+    "image": "/shopCat/fashion.jpg",
+    "rating": 4.5
+  },
+  {
+    "id": 3,
+    "category": "Books",
+    "subcategories": ["Fiction", "Non-Fiction", "Comics", "Educational"],
+    "name": "BookWorld",
+    "owner": "Suresh Nair",
+    "email": "suresh@bookworld.com",
+    "gst": "27MNOPQ1234H1Z3",
+    "place": "Bangalore",
+    "image": "/shopCat/fashion.jpg",
+    "rating": 4.9
+  },
+  {
+    "id": 4,
+    "category": "Beauty & Care",
+    "subcategories": ["Skincare", "Haircare", "Makeup", "Fragrances"],
+    "name": "GlowUp",
+    "owner": "Priya Verma",
+    "email": "priya@glowup.com",
+    "gst": "27QRSTU5678J1Z4",
+    "place": "Chennai",
+    "image": "/shopCat/fashion.jpg",
+    "rating": 4.6
+  },
+  {
+    "id": 5,
+    "category": "Home Appliances",
+    "subcategories": ["Kitchen", "Living Room", "Laundry", "Cleaning"],
+    "name": "HomeEase",
+    "owner": "Manish Singh",
+    "email": "manish@homeease.com",
+    "gst": "27LMNOP1234A1Z9",
+    "place": "Hyderabad",
+    "image": "/shopCat/fashion.jpg",
+    "rating": 4.7
+  },
+  {
+    "id": 6,
+    "category": "Sports",
+    "subcategories": ["Fitness", "Outdoor", "Indoor Games", "Accessories"],
+    "name": "SportyShop",
+    "owner": "Rohit Verma",
+    "email": "rohit@sportyshop.com",
+    "gst": "27QRST1234B1Z5",
+    "place": "Pune",
+    "image": "/shopCat/fashion.jpg",
+    "rating": 4.4
+  },
+  {
+    "id": 7,
+    "category": "Toys & Kids",
+    "subcategories": ["Educational", "Action Figures", "Board Games", "Dolls"],
+    "name": "ToyLand",
+    "owner": "Neha Kapoor",
+    "email": "neha@toyland.com",
+    "gst": "27ABCD1234C1Z7",
+    "place": "Kolkata",
+    "image": "/shopCat/fashion.jpg",
+    "rating": 4.5
+  },
+  {
+    "id": 8,
+    "category": "Groceries",
+    "subcategories": ["Fruits & Vegetables", "Dairy", "Snacks", "Beverages"],
+    "name": "FreshMart",
+    "owner": "Anil Mehta",
+    "email": "anil@freshmart.com",
+    "gst": "27EFGH1234D1Z8",
+    "place": "Ahmedabad",
+    "image": "/shopCat/fashion.jpg",
+    "rating": 4.9
+  }
+]

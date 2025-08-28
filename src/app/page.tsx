@@ -1,9 +1,16 @@
 // src/app/page.tsx
+"use client";
+
 import ShopCard from "@/components/shop/ShopCard";
 import Link from "next/link";
-import shopCategories from "@/data/shopCat.json"; // import JSON
+import shopCategories from "@/data/shopCat.json" assert { type: "json" };
+import shops from "@/data/shop.json" assert { type: "json" };
+import MostRatedShops from "@/components/shop/MostRatedShops";
 
 export default function HomePage() {
+  // Sort shops by rating descending
+  const mostRatedShops = [...shops].sort((a, b) => b.rating - a.rating);
+
   return (
     <div
       className="px-6 py-12 max-w-7xl mx-auto"
@@ -32,20 +39,40 @@ export default function HomePage() {
         </Link>
       </section>
 
-      {/* Featured Shops */}
-      <section>
+      {/* Shop Categories Section */}
+      <section className="mb-16">
         <h2
-          className="text-2xl md:text-3xl font-bold mb-8"
+          className="text-2xl md:text-3xl font-bold mb-6"
           style={{ color: "#1F2937" }}
         >
-          Featured Shops
+          Shop Categories
         </h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
-          {shopCategories.map((shop) => (
-            <ShopCard key={shop.id} shop={shop} />
+          {shopCategories.map((cat) => (
+            <div
+              key={cat.id}
+              className="p-4 rounded-xl shadow-md hover:shadow-lg transition cursor-pointer"
+              style={{ backgroundColor: "#D9F99D" }}
+            >
+              <img
+                src={cat.image}
+                alt={cat.name}
+                className="w-full h-32 object-cover rounded-md mb-2"
+              />
+              <h3 className="text-lg font-semibold" style={{ color: "#1F2937" }}>
+                {cat.name}
+              </h3>
+              <p className="text-sm text-gray-700 mt-1">
+                {cat.subcategories.join(", ")}
+              </p>
+            </div>
           ))}
         </div>
       </section>
+
+      {/* Most Rated Shops Slider Section */}
+    <MostRatedShops mostRatedShops={mostRatedShops} />
+
     </div>
   );
 }
