@@ -9,10 +9,11 @@ export default function UserNavbar() {
   const [cartCount, setCartCount] = useState(0); // replace with cart state
 
   return (
-    <header className="bg-white shadow-md px-6 py-4 flex items-center justify-between sticky top-0 z-50">
+    <header className="bg-[#F0FDF4] shadow-md px-6 py-4 flex items-center justify-between sticky top-0 z-50">
       {/* Logo */}
-      <Link href="/" className="text-2xl font-bold text-primary">
-        Chillbuy
+      <Link href="/" className="text-2xl font-bold flex items-center gap-1">
+        <span style={{ color: "#1F2937" }}>Chill</span>
+        <span style={{ color: "#34D399" }}>buy</span>
       </Link>
 
       {/* Search Bar */}
@@ -20,17 +21,21 @@ export default function UserNavbar() {
         <input
           type="text"
           placeholder="Search for products, shops..."
-          className="w-full px-4 py-2 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary"
+          className="w-full px-4 py-2 rounded-xl border border-gray-300 focus:outline-none"
+          style={{ borderColor: "#047857", caretColor: "#34D399" }}
         />
       </div>
 
       {/* Right Side */}
       <div className="flex items-center gap-6">
         {/* Cart */}
-        <Link href="/cart" className="relative text-dark font-medium">
+        <Link href="/cart" className="relative font-medium" style={{ color: "#1F2937" }}>
           🛒 Cart
           {cartCount > 0 && (
-            <span className="absolute -top-2 -right-3 bg-accent text-dark text-xs font-bold px-2 py-0.5 rounded-full">
+            <span
+              className="absolute -top-2 -right-3 text-xs font-bold px-2 py-0.5 rounded-full"
+              style={{ backgroundColor: "#D9F99D", color: "#1F2937" }}
+            >
               {cartCount}
             </span>
           )}
@@ -38,11 +43,11 @@ export default function UserNavbar() {
 
         {/* Account */}
         {isLoggedIn ? (
-          <Link href="/account" className="text-dark font-medium">
+          <Link href="/account" className="font-medium" style={{ color: "#1F2937" }}>
             My Account
           </Link>
         ) : (
-          <Link href="/login" className="text-dark font-medium">
+          <Link href="/login" className="font-medium" style={{ color: "#1F2937" }}>
             Login
           </Link>
         )}

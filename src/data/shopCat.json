@@ -1,0 +1,26 @@
+[
+  {
+    "id": 1,
+    "name": "Electronics Hub",
+    "image": "/shopCat/electronics.jpg",
+    "subcategories": ["Mobiles", "Laptops", "Headphones", "Cameras"]
+  },
+  {
+    "id": 2,
+    "name": "Fashion Store",
+    "image": "/shopCat/fashion.jpg",
+    "subcategories": ["Men", "Women", "Kids", "Accessories"]
+  },
+  {
+    "id": 3,
+    "name": "Book World",
+    "image": "/shopCat/books.jpg",
+    "subcategories": ["Fiction", "Non-Fiction", "Comics", "Educational"]
+  },
+  {
+    "id": 4,
+    "name": "Beauty & Care",
+    "image": "/shopCat/beauty.jpg",
+    "subcategories": ["Skincare", "Haircare", "Makeup", "Fragrances"]
+  }
+]

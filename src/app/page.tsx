@@ -1,30 +1,32 @@
 // src/app/page.tsx
 import ShopCard from "@/components/shop/ShopCard";
 import Link from "next/link";
-
+import shopCategories from "@/data/shopCat.json"; // import JSON
 
 export default function HomePage() {
-  // Sample shop data (replace with API later)
-  const shops = [
-    { id: 1, name: "Electronics Hub", image: "/shop/electronics.jpg" },
-    { id: 2, name: "Fashion Store", image: "/shop/fashion.jpg" },
-    { id: 3, name: "Book World", image: "/shop/books.jpg" },
-    { id: 4, name: "Beauty & Care", image: "/shop/beauty.jpg" },
-  ];
-
   return (
-    <div className="px-6 py-12 max-w-7xl mx-auto">
+    <div
+      className="px-6 py-12 max-w-7xl mx-auto"
+      style={{ backgroundColor: "#F0FDF4", minHeight: "100vh" }}
+    >
       {/* Hero Section */}
       <section className="text-center mb-16">
-        <h1 className="text-4xl md:text-5xl font-bold text-primary mb-4">
+        <h1
+          className="text-4xl md:text-5xl font-bold mb-4"
+          style={{ color: "#34D399" }}
+        >
           Relaxed Shopping, Anytime, Anywhere
         </h1>
-        <p className="text-gray-700 mb-6">
+        <p
+          className="text-gray-700 mb-6 max-w-2xl mx-auto"
+          style={{ color: "#4B5563" }}
+        >
           Choose your favorite shop, browse products, and get it delivered or pick up – no stress, just chill.
         </p>
         <Link
           href="/shop"
-          className="bg-primary text-white px-6 py-3 rounded-xl font-semibold hover:bg-teal-400 transition"
+          className="inline-block px-6 py-3 rounded-xl font-semibold transition-colors duration-300"
+          style={{ backgroundColor: "#D9F99D", color: "#1F2937" }}
         >
           Explore Shops
         </Link>
@@ -32,9 +34,14 @@ export default function HomePage() {
 
       {/* Featured Shops */}
       <section>
-        <h2 className="text-2xl font-bold text-dark mb-6">Featured Shops</h2>
+        <h2
+          className="text-2xl md:text-3xl font-bold mb-8"
+          style={{ color: "#1F2937" }}
+        >
+          Featured Shops
+        </h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
-          {shops.map((shop) => (
+          {shopCategories.map((shop) => (
             <ShopCard key={shop.id} shop={shop} />
           ))}
         </div>

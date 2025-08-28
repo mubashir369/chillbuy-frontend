@@ -11,7 +11,10 @@ export const metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      <body className="bg-graylight text-dark">
+      <body
+        className="text-dark"
+        style={{ backgroundColor: "#F0FDF4", color: "#1F2937" }}
+      >
         {/* Navbar */}
         <UserNavbar />
 
