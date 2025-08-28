@@ -1,9 +1,28 @@
+// src/components/shop/MostRatedShops.tsx
 "use client";
 
 import { useRef } from "react";
 import ShopCard from "@/components/shop/ShopCard";
 
-export default function MostRatedShops({ mostRatedShops }: { mostRatedShops: any[] }) {
+// Define the shop type
+type Shop = {
+  id: number;
+  category: string;
+  subcategories: string[];
+  name: string;
+  owner: string;
+  email: string;
+  gst: string;
+  place: string;
+  image: string;
+  rating: number;
+};
+
+interface MostRatedShopsProps {
+  mostRatedShops: Shop[];
+}
+
+export default function MostRatedShops({ mostRatedShops }: MostRatedShopsProps) {
   const scrollRef = useRef<HTMLDivElement>(null);
 
   const scroll = (direction: "left" | "right") => {
@@ -18,7 +37,7 @@ export default function MostRatedShops({ mostRatedShops }: { mostRatedShops: any
 
   return (
     <section className="mb-16 relative">
-      <h2 className="text-2xl md:text-3xl font-bold mb-6" style={{ color: "#1F2937" }}>
+      <h2 className="text-2xl md:text-3xl font-bold mb-6 text-gray-800">
         Most Rated Shops
       </h2>
 
@@ -33,7 +52,7 @@ export default function MostRatedShops({ mostRatedShops }: { mostRatedShops: any
       {/* Scrollable Container */}
       <div
         ref={scrollRef}
-        className="flex space-x-6 overflow-x-hidden px-12" // px-12 adds space so arrows don’t overlap
+        className="flex space-x-6 overflow-x-hidden px-12"
       >
         {mostRatedShops.map((shop) => (
           <div key={shop.id} className="flex-shrink-0 w-64">
