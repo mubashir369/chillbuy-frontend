@@ -10,20 +10,22 @@ import {
   CubeIcon,
   DocumentTextIcon,
   CogIcon,
+  TagIcon 
 } from "@heroicons/react/24/outline"; // optional heroicons
 
 export default function SuperAdminSidebar() {
   const [active, setActive] = useState("Dashboard");
 
-  const menuItems = [
-    { name: "Dashboard", icon: HomeIcon, path: "/superadmin/dashboard" },
-    { name: "Vendors", icon: UsersIcon, path: "/superadmin/vendors" },
-    { name: "Products", icon: CubeIcon, path: "/superadmin/products" },
-    { name: "Homepage Content", icon: DocumentTextIcon, path: "/superadmin/homepage" },
-    { name: "Orders", icon: ShoppingBagIcon, path: "/superadmin/orders" },
-    { name: "Reports", icon: DocumentTextIcon, path: "/superadmin/reports" },
-    { name: "Settings", icon: CogIcon, path: "/superadmin/settings" },
-  ];
+const menuItems = [
+  { name: "Dashboard", icon: HomeIcon, path: "/superadmin/dashboard" },
+  { name: "Vendors", icon: UsersIcon, path: "/superadmin/vendors" },
+  { name: "Products", icon: CubeIcon, path: "/superadmin/products" },
+  { name: "Homepage Content", icon: DocumentTextIcon, path: "/superadmin/homepage" },
+  { name: "Orders", icon: ShoppingBagIcon, path: "/superadmin/orders" },
+  { name: "Reports", icon: DocumentTextIcon, path: "/superadmin/reports" },
+  { name: "Settings", icon: CogIcon, path: "/superadmin/settings" },
+  { name: "Shop Categories", icon: TagIcon, path: "/superadmin/categories" }, // <- added
+];
 
   return (
     <aside className="w-64 bg-gray-100 min-h-screen shadow-md flex flex-col p-4">
