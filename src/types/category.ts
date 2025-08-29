@@ -1,8 +1,8 @@
 export interface SubCategory {
   name: string;
-  image: string;
+  image?: string;       // URL from backend
+  imageFile?: File | null; // file from frontend
 }
-
 export interface Category {
   _id: string;
   name: string;
@@ -16,6 +16,8 @@ export interface Category {
 
 export interface NewCategory {
   name: string;
-  image: string;
+  image?: string;        // URL from backend
+  imageFile?: File | null; // main image file from frontend
   subcategories: SubCategory[];
+  status?: "Active" | "Inactive";
 }

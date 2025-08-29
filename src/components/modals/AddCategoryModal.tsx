@@ -12,7 +12,7 @@ interface SubCategory {
 
 interface Props {
   onClose: () => void;
-  onAdd: () => void; // 👈 simplified, we directly call API inside
+  onAdd: () => void; // directly call API inside modal
 }
 
 export default function AddCategoryModal({ onClose, onAdd }: Props) {
@@ -20,43 +20,29 @@ export default function AddCategoryModal({ onClose, onAdd }: Props) {
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [imagePreview, setImagePreview] = useState<string | null>(null);
   const [subcategories, setSubcategories] = useState<SubCategory[]>([]);
+const handleAdd = async () => {
+  const formData = new FormData();
+  formData.append("name", name);
+  if (imageFile) formData.append("image", imageFile);
+  formData.append(
+    "subcategories",
+    JSON.stringify(subcategories.map((s) => ({ name: s.name })))
+  );
+  subcategories.forEach((s) => {
+    if (s.imageFile) formData.append("subImages", s.imageFile);
+  });
 
-  const handleAdd = async () => {
-    if (!name || !imageFile) return;
-
-    const formData = new FormData();
-    formData.append("name", name);
-    formData.append("image", imageFile);
-
-    // store subcategories as JSON (for names)
-    formData.append(
-      "subcategories",
-      JSON.stringify(
-        subcategories.map((s) => ({
-          name: s.name,
-        }))
-      )
-    );
-
-    // append subcategory images
-   subcategories.forEach((s) => {
-  if (s.imageFile) {
-    formData.append("subImages", s.imageFile); 
+  try {
+    await apiClient.post("/categories", formData, {
+      headers: { "Content-Type": "multipart/form-data" },
+    });
+    onAdd(); // just refresh parent table
+    onClose();
+  } catch (err) {
+    console.error(err);
   }
-});
+};
 
-
-    try {
-      await apiClient.post("/categories", formData, {
-        headers: { "Content-Type": "multipart/form-data" },
-      });
-
-      onAdd(); 
-      onClose();
-    } catch (error) {
-      console.error("Upload failed", error);
-    }
-  };
 
   const handleSubChange = (
     index: number,
@@ -89,7 +75,7 @@ export default function AddCategoryModal({ onClose, onAdd }: Props) {
     <ModalWrapper onClose={onClose} width="max-w-3xl">
       <h3 className="text-2xl font-bold mb-6">Add Category</h3>
 
-      {/* Category name + image */}
+      {/* Category Name & Main Image */}
       <div className="flex flex-col md:flex-row md:items-center gap-4 mb-4">
         <input
           type="text"
@@ -98,13 +84,12 @@ export default function AddCategoryModal({ onClose, onAdd }: Props) {
           value={name}
           onChange={(e) => setName(e.target.value)}
         />
-
         <div className="flex flex-col">
           <input
             type="file"
             accept="image/*"
             onChange={(e) => {
-              if (e.target.files && e.target.files[0]) {
+              if (e.target.files?.[0]) {
                 setImageFile(e.target.files[0]);
                 setImagePreview(URL.createObjectURL(e.target.files[0]));
               }
@@ -140,7 +125,7 @@ export default function AddCategoryModal({ onClose, onAdd }: Props) {
                   handleSubChange(
                     index,
                     "imageFile",
-                    e.target.files ? e.target.files[0] : null
+                    e.target.files?.[0] || null
                   )
                 }
               />

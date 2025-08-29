@@ -5,7 +5,7 @@ import ModalWrapper from "./ModalWrapper";
 
 interface SubCategory {
   name: string;
-  image: string;
+  image?: string;
 }
 
 interface Category {

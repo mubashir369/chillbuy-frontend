@@ -4,7 +4,6 @@ import { useState, useEffect } from "react";
 import Image from "next/image";
 import {
   getCategories,
-  createCategory,
   updateCategory,
   deleteCategory,
 } from "@/services/category";
@@ -12,7 +11,8 @@ import {
 import AddCategoryModal from "@/components/modals/AddCategoryModal";
 import EditCategoryModal from "@/components/modals/EditCategoryModal";
 import ModalWrapper from "@/components/modals/ModalWrapper";
-import { Category, NewCategory, SubCategory } from "@/types/category";
+import { Category, NewCategory } from "@/types/category";
+import apiClient from "@/services/apiClient";
 
 export default function ShopCategoryTable() {
   const [categories, setCategories] = useState<Category[]>([]);
@@ -25,25 +25,23 @@ export default function ShopCategoryTable() {
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
 
   // Fetch categories
-const fetchCategories = async () => {
-  setLoading(true);
-  try {
-    const data = await getCategories();
-    // Transform to ensure createdAt and updatedAt exist
-    const formatted: Category[] = data.map(cat => ({
-      ...cat,
-      createdAt: cat.createdAt || new Date().toISOString(),
-      updatedAt: cat.updatedAt || new Date().toISOString(),
-      status: cat.status || "Active",
-    }));
-    setCategories(formatted);
-  } catch (err) {
-    console.error(err);
-  } finally {
-    setLoading(false);
-  }
-};
-
+  const fetchCategories = async () => {
+    setLoading(true);
+    try {
+      const data = await getCategories();
+      const formatted: Category[] = data.map(cat => ({
+        ...cat,
+        createdAt: cat.createdAt || new Date().toISOString(),
+        updatedAt: cat.updatedAt || new Date().toISOString(),
+        status: cat.status || "Active",
+      }));
+      setCategories(formatted);
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
     fetchCategories();
@@ -70,14 +68,31 @@ const fetchCategories = async () => {
     setAddModalOpen(true);
   };
 
-  // Add category
+  // Add category with image and subcategory images
   const handleAddCategory = async (newCat: NewCategory) => {
     try {
-      await createCategory(newCat);
+      const formData = new FormData();
+      formData.append("name", newCat.name);
+
+      // main category image
+      if (newCat.imageFile) formData.append("image", newCat.imageFile);
+
+      // subcategories
+      if (newCat.subcategories && newCat.subcategories.length > 0) {
+        newCat.subcategories.forEach((sub, i) => {
+          formData.append(`subcategories[${i}][name]`, sub.name);
+          if (sub.imageFile) formData.append(`subcategories[${i}][image]`, sub.imageFile);
+        });
+      }
+
+      await apiClient.post("/categories", formData, {
+        headers: { "Content-Type": "multipart/form-data" },
+      });
+
       setAddModalOpen(false);
       fetchCategories();
     } catch (err) {
-      console.error(err);
+      console.error("Add category error:", err);
     }
   };
 
@@ -136,37 +151,37 @@ const fetchCategories = async () => {
               <tr key={cat._id} className="border-b hover:bg-gray-100">
                 <td className="py-2 px-4">{index + 1}</td>
                 <td className="py-2 px-4">
-                  <Image
-                    src={cat.image}
-                    alt={cat.name}
-                    width={48}
-                    height={48}
-                    className="rounded"
-                  />
+                  {cat.image && (
+                    <Image
+                      src={cat.image}
+                      alt={cat.name}
+                      width={48}
+                      height={48}
+                      className="rounded"
+                    />
+                  )}
                 </td>
                 <td className="py-2 px-4">{cat.name}</td>
-            <td className="py-2 px-4">{cat.createdAt ? new Date(cat.createdAt).toLocaleDateString() : "-"}</td>
-<td className="py-2 px-4">{cat.updatedAt ? new Date(cat.updatedAt).toLocaleDateString() : "-"}</td>
-
+                <td className="py-2 px-4">{cat.createdAt ? new Date(cat.createdAt).toLocaleDateString() : "-"}</td>
+                <td className="py-2 px-4">{cat.updatedAt ? new Date(cat.updatedAt).toLocaleDateString() : "-"}</td>
                 <td className="py-2 px-4">
-  <select
-    value={cat.status || "Active"}
-    onChange={async (e) => {
-      const newStatus = e.target.value;
-      try {
-        await updateCategory(cat._id, { ...cat, status: newStatus });
-        fetchCategories(); // refresh the table
-      } catch (err) {
-        console.error(err);
-      }
-    }}
-  className={`border px-2 py-1 rounded ${cat.status === "Active" ? "text-green-600" : "text-red-600"}`}
-
-  >
-    <option value="Active">Active</option>
-    <option value="Inactive">Inactive</option>
-  </select>
-</td>
+                  <select
+                    value={cat.status || "Active"}
+                    onChange={async (e) => {
+                      const newStatus = e.target.value;
+                      try {
+                        await updateCategory(cat._id, { ...cat, status: newStatus });
+                        fetchCategories();
+                      } catch (err) {
+                        console.error(err);
+                      }
+                    }}
+                    className={`border px-2 py-1 rounded ${cat.status === "Active" ? "text-green-600" : "text-red-600"}`}
+                  >
+                    <option value="Active">Active</option>
+                    <option value="Inactive">Inactive</option>
+                  </select>
+                </td>
                 <td className="py-2 px-4 flex gap-2">
                   <button
                     className="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600 transition"
@@ -201,7 +216,7 @@ const fetchCategories = async () => {
           <ul className="mb-4">
             {selectedCategory.subcategories.map((sub, i) => (
               <li key={i} className="flex items-center gap-2 mb-1">
-                <Image src={sub.image} alt={sub.name} width={24} height={24} className="rounded" />
+                {sub.image && <Image src={sub.image} alt={sub.name} width={24} height={24} className="rounded" />}
                 {sub.name}
               </li>
             ))}
@@ -218,8 +233,8 @@ const fetchCategories = async () => {
       {/* Add Category Modal */}
       {addModalOpen && (
         <AddCategoryModal
-          onClose={() => setAddModalOpen(false)}
-          onAdd={handleAddCategory}
+            onClose={() => setAddModalOpen(false)}
+  onAdd={fetchCategories} // just refresh
         />
       )}
 
